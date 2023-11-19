@@ -1,33 +1,34 @@
-# from django.db import models
-# from lesson.models import Lesson
-# from user.models import Teacher, Pupil
+from django.db import models
+from lesson.models import Lesson
+from user.models import Teacher, Pupil
 
-# class Pupils(models.Model):
+
+class Pupils(models.Model):
     
-#     DAY = (
-#         ('Dushanba', 'DU-CHOR-JUMA'),
-#         ('Seshanba', 'SE-PAY-SHANBA'),
-#     )
+    DAY = (
+        ('Dushanba', 'DU-CHOR-JUMA'),
+        ('Seshanba', 'SE-PAY-SHANBA'),
+    )
 
-#     first_name = models.CharField(max_length=50, verbose_name='Ism', null=True,blank=True)
-#     last_name = models.CharField(max_length=50, verbose_name='Familiya', null=True,blank=True)
-#     subject = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='pupils')
-#     phone_number_1 = models.CharField(max_length=13, verbose_name='1-telefon raqam')
-#     phone_number_2 = models.CharField(max_length=13, verbose_name='2-telefon raqam', null=True, blank=True)
-#     lesson_day = models.CharField(max_length=30, default='Dushanba', blank=True, null=True)
-#     lesson_time = models.CharField(max_length=300, null=True, blank=True, verbose_name='Sizga qulay dars vaqti')
-#     comment = models.CharField(max_length=200, verbose_name='Kim tavsiya berdi', null=True, blank=True)
-#     is_active_pupil = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=50, verbose_name='Ism', null=True,blank=True)
+    last_name = models.CharField(max_length=50, verbose_name='Familiya', null=True,blank=True)
+    subject = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='register_pupils', verbose_name='Yo\'nalish')
+    phone_number_1 = models.CharField(max_length=13, verbose_name='1-telefon raqam')
+    phone_number_2 = models.CharField(max_length=13, verbose_name='2-telefon raqam', null=True, blank=True)
+    lesson_day = models.CharField(max_length=30, choices=DAY, default='Dushanba', blank=True, null=True, verbose_name="Kun")
+    lesson_time = models.CharField(max_length=300, null=True, blank=True, verbose_name='Sizga qulay dars vaqti')
+    comment = models.CharField(max_length=200, verbose_name='Kim tavsiya berdi', null=True, blank=True)
+    is_active_pupil = models.BooleanField(default=True)
 
-#     def __str__(self) -> str:
-#         return f'{self.first_name}, {self.last_name} - {self.subject}'
+    def __str__(self) -> str:
+        return f'{self.first_name}, {self.last_name} - {self.subject}'
     
 
-# class Room(models.Model):
-#     name = models.CharField(max_length=30, verbose_name='xona')
+class Room(models.Model):
+    name = models.CharField(max_length=30, verbose_name='xona')
 
-#     def __str__(self) -> str:
-#         return self.name
+    def __str__(self) -> str:
+        return self.name
 
 
 # class Group(models.Model):
@@ -54,4 +55,4 @@
 
 #     def __str__(self) -> str:
 #         return f'{self.group}-{self.subject}'
-# # from django.core.paginator import Paginator
+    
