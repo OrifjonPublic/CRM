@@ -4,7 +4,7 @@ from django.urls import path
 
 from .views import UserRegisterView
 from lesson.views import LessonCreateListView
-from pupil.views import RegisterPupilView
+from pupil.views import RegisterPupilView, RoomView
 
 urlpatterns = [
 
@@ -18,5 +18,8 @@ urlpatterns = [
 
     #PupilsRegister
     path('register_pupil/', RegisterPupilView.as_view(), name='register_pupils'),
+
+    #room
+    path('room/', RoomView.as_view(), name='room_create'),
 
 ]

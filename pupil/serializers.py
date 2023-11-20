@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Pupils
+from .models import Pupils, Room
 
 
 class PupilRegisterSerializer(serializers.ModelSerializer):
@@ -16,4 +16,8 @@ class PupilRegisterSerializer(serializers.ModelSerializer):
             'lesson_time',
             'comment',
               )
-    
+
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = ('name',)    
