@@ -8,3 +8,9 @@ class Lesson(models.Model):
     def __str__(self) -> str:
         return self.name.title()
     
+
+class LessonTime(models.Model):
+    vaqt = models.CharField(max_length=30, verbose_name='dars vaqti')
+
+    def __str__(self) -> str:
+        return self.vaqt    

@@ -1,7 +1,9 @@
+from collections.abc import Iterable
 from django.db import models
-from lesson.models import Lesson
-from user.models import Teacher, Pupil
+from lesson.models import Lesson, LessonTime
+from user.models import Teacher, Pupil, User
 
+import random
 
 class Pupils(models.Model):
     
@@ -31,11 +33,35 @@ class Room(models.Model):
         return self.name
 
 
-# class Group(models.Model):
-#     name = models.CharField(max_length=120)
+class Group(models.Model):
+    DAY = (
+        ('dushanba',  'DUSHANBA'),
+        ('seshanba',  'SESHANBA'),
+    )
+    
 
-#     def __str__(self) -> str:
-#         return f'{self.name}'
+    name = models.CharField(max_length=120, unique=True, blank=True, verbose_name='guruh nomi')
+    day = models.CharField(max_length=30, choices=DAY)
+    pupils = models.ManyToManyField(Pupil)
+    subject = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Yo\'nalish')
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='groups', verbose_name='dars xonasi')
+    vaqt = models.ForeignKey(LessonTime, on_delete=models.CASCADE, verbose_name='dars vaqti', null=True, blank=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Ustoz')
+
+    def save(self, *args, **kwargs):
+        if not self.name:
+            fan = self.subject.name.split()
+            name = ''
+            for i in fan:
+                if len(fan)==1:
+                    name += i[0:2].title()
+                else:   
+                    name += i[0].title()
+            self.name = name + '-' + str(random.randint(10000,99999))
+        return super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return f'{self.name}'
 
 
 # class GroupPupil(models.Model):

@@ -3,7 +3,9 @@ from rest_framework_simplejwt.views import (    TokenObtainPairView, TokenRefres
 from django.urls import path
 
 from .views import UserRegisterView
-from lesson.views import LessonCreateListView
+
+from lesson.views import LessonCreateListView, LessonTimeView
+
 from pupil.views import RegisterPupilView, RoomView
 
 urlpatterns = [
@@ -22,4 +24,6 @@ urlpatterns = [
     #room
     path('room/', RoomView.as_view(), name='room_create'),
 
+    #lessonTime
+    path('lesson/time/', LessonTimeView.as_view(), name='lesson_time'),
 ]
