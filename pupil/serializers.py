@@ -1,9 +1,12 @@
 from rest_framework import serializers
 
 from .models import Pupils, Room
+from lesson.serializers import LessonSerializer
 
 
 class PupilRegisterSerializer(serializers.ModelSerializer):
+    subject = LessonSerializer()
+    
     class Meta:
         model = Pupils
         fields = (

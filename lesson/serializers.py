@@ -12,4 +12,4 @@ class LessonSerializer(serializers.ModelSerializer):
 class LessonTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = LessonTime
-        fields = ( 'name',)
+        fields = ( 'vaqt',)

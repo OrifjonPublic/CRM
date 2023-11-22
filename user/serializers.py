@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from .models import User
+from .models import User, Administrator, Manager, Pupil, Teacher
+from lesson.serializers import LessonSerializer
 
 
 class UserSignUpSerializer(serializers.ModelSerializer):
@@ -26,3 +27,36 @@ class UserSignUpSerializer(serializers.ModelSerializer):
                 }
             )
         return username   
+
+
+class ManagerSerializer(serializers.ModelSerializer):
+    manager = UserSignUpSerializer()
+    class Meta:
+        model = Manager
+        fields = ('manager', 'image', 'phone_number')
+
+
+class AdministratorSerializer(serializers.ModelSerializer):
+    administrator = UserSignUpSerializer()
+    class Meta:
+        model = Administrator
+        fields = ('administrator', 'image', 'phone_number')
+        
+
+class TeacherSerializer(serializers.ModelSerializer):
+    subject = LessonSerializer(many=True)
+    teacher = UserSignUpSerializer()
+    class Meta:
+        model = Teacher
+        fields = ('teacher', 'image', 'phone_number', 'subject')
+
+
+class PupilSerializer(serializers.ModelSerializer):
+    pupil = UserSignUpSerializer()
+    teacher = TeacherSerializer()
+    subject = LessonSerializer()
+
+    class Meta:
+        model = Pupil
+        fields = ['first_name', 'last_name', 'pupil', 'phone_number', 'phone_number2', 'subject', 'teacher']
+        

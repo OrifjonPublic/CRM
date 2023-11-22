@@ -40,7 +40,7 @@ class Group(models.Model):
     )
     
 
-    name = models.CharField(max_length=120, unique=True, blank=True, verbose_name='guruh nomi')
+    name = models.CharField(max_length=120, null=True, blank=True, verbose_name='guruh nomi')
     day = models.CharField(max_length=30, choices=DAY)
     pupils = models.ManyToManyField(Pupil)
     subject = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Yo\'nalish')
