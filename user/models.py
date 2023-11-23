@@ -24,7 +24,7 @@ class User(AbstractUser):
 class Manager(models.Model):
     manager = models.OneToOneField(User, on_delete=models.CASCADE, related_name='manager')
     phone_number = models.CharField(max_length=13, verbose_name='Telefon raqam ', null=True, blank=True)
-    image = models.ImageField(upload_to=image_path, verbose_name='Foydalanuvchi rasmi ', null=True, blank=True)
+    image = models.ImageField(upload_to='manager/', verbose_name='Foydalanuvchi rasmi ', null=True, blank=True)
 
     def __str__(self) -> str:
         return self.manager.username
@@ -33,7 +33,7 @@ class Manager(models.Model):
 class Administrator(models.Model):
     phone_number = models.CharField(max_length=13, verbose_name='Telefon raqam ', null=True, blank=True)
     administrator = models.OneToOneField(User, on_delete=models.CASCADE, related_name='administrator')
-    image = models.ImageField(upload_to=image_path, verbose_name='Foydalanuvchi rasmi ', null=True, blank=True)
+    image = models.ImageField(upload_to='administrator/', verbose_name='Foydalanuvchi rasmi ', null=True, blank=True)
 
     def __str__(self) -> str:
         return self.administrator.username
@@ -42,7 +42,7 @@ class Administrator(models.Model):
 class Teacher(models.Model):
     phone_number = models.CharField(max_length=13, verbose_name='Telefon raqam ', null=True, blank=True)
     teacher = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher')
-    image = models.ImageField(upload_to=image_path, verbose_name='Foydalanuvchi rasmi ', null=True, blank=True)
+    image = models.ImageField(upload_to='teacher/', verbose_name='Foydalanuvchi rasmi ', null=True, blank=True)
     subject = models.ManyToManyField(Lesson, related_name='teachers')
 
     def __str__(self) -> str:

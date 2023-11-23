@@ -11,10 +11,24 @@ class LessonCreateListView(generics.ListCreateAPIView):
     permission_classes= ( permissions.AllowAny, )
     
 
+class LessonGetView(views.APIView):
+    def get(self, request, id=None):
+        lesson = Lesson.objects.get(id=id)
+        lesson = LessonSerializer(lesson)
+        return response.Response(lesson.data)
+
+
 class LessonTimeView(generics.ListCreateAPIView):
     queryset = LessonTime.objects.all()
     serializer_class = LessonTimeSerializer
     permission_classes = ( permissions.AllowAny, )
 
+
+class LessonTimeGetView(views.APIView):
+    def get(self, request, id=None):
+        timel = LessonTime.objects.get(id=id)
+        timel = LessonTimeSerializer(timel)
+        return response.Response(timel.data)
+    
 
 # Create your views here.

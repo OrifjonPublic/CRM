@@ -5,11 +5,12 @@ from lesson.serializers import LessonSerializer
 
 
 class PupilRegisterSerializer(serializers.ModelSerializer):
-    subject = LessonSerializer()
+    # subject = LessonSerializer()
     
     class Meta:
         model = Pupils
         fields = (
+            'id',
             'first_name',
             'last_name',
             'subject',
@@ -23,4 +24,4 @@ class PupilRegisterSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('name',)    
+        fields = ('name', 'id')    

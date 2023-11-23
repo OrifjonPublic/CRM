@@ -8,7 +8,7 @@ from lesson.serializers import LessonSerializer
 class UserSignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'password', 'status')
+        fields = ('id', 'username', 'password', 'status')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -30,25 +30,73 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 
 
 class ManagerSerializer(serializers.ModelSerializer):
-    manager = UserSignUpSerializer()
+    manager = UserSignUpSerializer(read_only=True)
     class Meta:
         model = Manager
-        fields = ('manager', 'image', 'phone_number')
+        fields = ['id','phone_number',  'image', 'manager']
+        extra_kwargs = {'manager': {'required': False}}
+
+    def create(self, validated_data):
+        # user = None
+        request = self.context.get("request")
+        user = request.user
+        
+        manager = Manager.objects.filter(manager=user).first()
+        if manager:
+            for key, value in validated_data.items():
+                setattr(manager, key, value)
+            manager.save()
+            return manager
+        manager = Manager.objects.create(manager=user, **validated_data)
+        return manager
 
 
 class AdministratorSerializer(serializers.ModelSerializer):
-    administrator = UserSignUpSerializer()
+    administrator = UserSignUpSerializer(read_only=True)
     class Meta:
         model = Administrator
-        fields = ('administrator', 'image', 'phone_number')
+        fields = ( 'id','administrator', 'image', 'phone_number',)
+        extra_kwargs = {'administrator': {'required': False}}
+    
+    def create(self, validated_data):
+    
+        # user = None
+        request = self.context.get("request")
+        user = request.user
         
+        administrator = Administrator.objects.filter(administrator=user).first()
+        if administrator:
+            for key, value in validated_data.items():
+                setattr(administrator, key, value)
+            administrator.save()
+            return administrator
+        administrator = Administrator.objects.create(administrator=user, **validated_data)
+        return administrator
+
+
 
 class TeacherSerializer(serializers.ModelSerializer):
     subject = LessonSerializer(many=True)
-    teacher = UserSignUpSerializer()
+    teacher = UserSignUpSerializer(read_only=True)
     class Meta:
         model = Teacher
         fields = ('teacher', 'image', 'phone_number', 'subject')
+        extra_kwargs = {'administrator': {'required': False}}
+    
+    def create(self, validated_data):
+    
+        # user = None
+        request = self.context.get("request")
+        user = request.user
+        
+        teacher = Teacher.objects.filter(teacher=user).first()
+        if teacher:
+            for key, value in validated_data.items():
+                setattr(teacher, key, value)
+            teacher.save()
+            return teacher
+        teacher = Teacher.objects.create(teacher=user, **validated_data)
+        return teacher
 
 
 class PupilSerializer(serializers.ModelSerializer):
